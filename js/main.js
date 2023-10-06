@@ -7,82 +7,70 @@ let elSpanTwo = document.querySelector('.span2');
 let elSpanThree = document.querySelector('.span3');
 let elSpanFour = document.querySelector('.span4');
 
-const piyoda = 3.6;
+const piyoda = 3.6; 
 const velosiped = 20.1;
 const mashina = 70;
 const samolyot = 800;
 
+function checkTime(dis,speed) {
+    let hours = Math.floor(dis / speed);
+    let minutes = Math.floor((dis / speed - hours) * 60);
+    let seconds = Math.floor(((dis / speed - hours) * 60 - minutes) * 60);    
+    
+    if (hours == 0 && minutes == 0) {
+        return `Sekund: ${seconds}`;    
+    }
+    if (minutes == 0 && seconds == 0) {
+        return `Soat: ${hours}`;     
+    }
+    if (hours == 0) {   
+        return `Minut: ${minutes} Sekund: ${seconds}`;    
+    }
+    else if (minutes == 0) {
+        return `Soat: ${hours} Sekund: ${seconds}`;    
+    }
+    if (seconds == 0) {
+        return `Soat: ${hours} Minut: ${minutes}`;    
+    }
+    
+    let elResult = `Soat: ${hours} Minut: ${minutes} Sekund: ${seconds}`;    
+    return elResult;
+}
+
 elForm.addEventListener('submit', function(evt) {
     evt.preventDefault();
-    inputValue = elInput.value;    
-    if (inputValue < 0) {
-        alert('Manfiy son kiritmang!')
+    let inputValue = elInput.value;    
+    if (inputValue <= 0) {
+        elSpanOne.textContent = '';
+        elSpanTwo.textContent = '';
+        elSpanThree.textContent = '';
+        elSpanFour.textContent = '';      
+        result.textContent = 'Iltimos musbat son kiriting!'
         return;
     }
     
-    // functions 
-    
-    function walk() {
-        return inputValue / piyoda;
+    if (isNaN(inputValue)) {
+        elSpanOne.textContent = '';
+        elSpanTwo.textContent = '';
+        elSpanThree.textContent = '';
+        elSpanFour.textContent = '';      
+        result.textContent = 'Iltimos son kiriting!'
+        return; 
     }
-    function bicycle() {
-        return inputValue / velosiped;    
+    if (inputValue.length > 7) {
+        elSpanOne.textContent = '';
+        elSpanTwo.textContent = '';
+        elSpanThree.textContent = '';
+        elSpanFour.textContent = '';      
+        result.textContent = '7 xonali songacha kiritish mumkin!'
+        return;
     }
-    function car() {
-        return inputValue / mashina;
-    }
-    function plane() {
-        return inputValue / samolyot; 
-    }
+    elInput.value = '';
+    result.textContent = "";
     
-    // walk
     
-    const hoursW = Math.floor(walk());
-    
-    const remainingMinutesW = (walk() - hoursW) * 60;
-    
-    const minutesW = Math.floor(remainingMinutesW);
-    
-    const remainingSecondsW = (remainingMinutesW - minutesW) * 60;
-    const secondsW = Math.round(remainingSecondsW);
-    
-    // bicycle
-    
-    const hoursB = Math.floor(bicycle());
-    
-    const remainingMinutesB = (bicycle() - hoursB) * 60;
-    
-    const minutesB = Math.floor(remainingMinutesB);
-    
-    const remainingSecondsB = (remainingMinutesB - minutesB) * 60;
-    const secondsB = Math.round(remainingSecondsB);
-    
-    // car 
-    
-    const hoursC = Math.floor(car());
-    
-    const remainingMinutesC = (car() - hoursC) * 60;
-    
-    const minutesC = Math.floor(remainingMinutesC);
-    
-    const remainingSecondsC = (remainingMinutesC - minutesC) * 60;
-    const secondsC = Math.round(remainingSecondsC);
-    
-    // plane
-    
-    const hoursP = Math.floor(plane());
-    
-    const remainingMinutesP = (plane() - hoursP) * 60;
-    
-    const minutesP = Math.floor(remainingMinutesP);
-    
-    const remainingSecondsP = (remainingMinutesP - minutesP) * 60;
-    const secondsP = Math.round(remainingSecondsP);
-    
-    // show 
-    
-    elSpanOne.textContent = (`Soat: ${hoursW}, Minutes: ${minutesW}, Seconds: ${secondsW}`);
-    elSpanTwo.textContent = (`Soat: ${hoursB}, Minutes: ${minutesB}, Seconds: ${secondsB}`);
-    elSpanThree.textContent = (`Soat: ${hoursC}, Minutes: ${minutesC}, Seconds: ${secondsC}`);
-    elSpanFour.textContent = (`Soat: ${hoursP}, Minutes: ${minutesP}, Seconds: ${secondsP}`);    
-}) 
+    elSpanOne.textContent = checkTime(inputValue,piyoda);
+    elSpanTwo.textContent = checkTime(inputValue,velosiped);
+    elSpanThree.textContent = checkTime(inputValue,mashina);
+    elSpanFour.textContent = checkTime(inputValue,samolyot);  
+})

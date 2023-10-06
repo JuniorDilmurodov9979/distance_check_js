@@ -1,3 +1,6 @@
+body {
+    font-family: cursive;
+}
 .wrapper {
     display: flex;
     flex-direction: column;
@@ -101,6 +104,12 @@
     content: "";
 }
 span {
-    font-size: 18px;
+    display: block;
+    font-size: 16px;
     color: rgb(32, 53, 59);
+}
+.resultC {
+    height: 20px;
+    text-align: center;
+    color: red;
 }
